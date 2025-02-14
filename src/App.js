@@ -2,7 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import React from 'react';
-import KakaoMap from './components/KakaoMap';
+import HeadquarterRecommendationPage from './pages/HeadquarterRecommendationPage';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/kakaomap" element={<KakaoMap />} />
+          <Route path="/kakaomap" element={<HeadquarterRecommendationPage />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

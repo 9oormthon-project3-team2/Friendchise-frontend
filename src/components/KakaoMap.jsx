@@ -1,58 +1,66 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const { kakao } = window;
 
-const KakaoMap = () => {
+const KakaoMap = ({ setCoords }) => {
+  const mapCenter = new kakao.maps.LatLng(
+    37.571680186686756,
+    126.97663594996186,
+  );
+  const mapLevel = 3;
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
+
   useEffect(() => {
-    // window.kakao 객체가 로드되었는지 확인
     if (!window.kakao || !window.kakao.maps) {
       console.error('Kakao Maps API is not loaded.');
       return;
     }
-
-    const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    const container = document.getElementById('map');
     const options = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-      level: 3, //지도의 레벨(확대, 축소 정도)
+      center: mapCenter,
+      level: mapLevel,
     };
 
-    const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    // 지도 중심 좌표에 마커 생성 및 지도에 추가
-    const marker = new kakao.maps.Marker({
-      position: map.getCenter(),
+    // 지도는 마운트 시 한 번만 생성합니다.
+    const map = new kakao.maps.Map(container, options);
+    mapRef.current = map;
+
+    // 줌 컨트롤 추가
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    // 지도 클릭 이벤트 등록
+    kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+      const latlng = mouseEvent.latLng;
+      setCoords({
+        lat: latlng.getLat(),
+        lng: latlng.getLng(),
+      });
+
+      // 마커가 있으면 위치만 이동, 없으면 생성
+      if (markerRef.current) {
+        markerRef.current.setPosition(latlng);
+      } else {
+        const newMarker = new kakao.maps.Marker({
+          position: latlng,
+        });
+        newMarker.setMap(map);
+        markerRef.current = newMarker;
+      }
+
+      // 결과 메시지 표시
+      const message = `클릭한 위치의 위도는 ${latlng.getLat()} 이고, 경도는 ${latlng.getLng()} 입니다`;
+      const resultDiv = document.getElementById('clickLatlng');
+      if (resultDiv) {
+        resultDiv.innerHTML = message;
+      }
     });
-    marker.setMap(map);
-
-    // 지도에 클릭 이벤트 등록
-    kakao.maps.event.addListener(
-      map,
-      'click',
-      function (mouseEvent) {
-        // 클릭한 위도, 경도 정보를 가져옵니다.
-        var latlng = mouseEvent.latLng;
-
-        // 마커 위치를 클릭한 위치로 옮깁니다.
-        marker.setPosition(latlng);
-
-        // 클릭한 위치의 좌표 정보를 문자열로 구성
-        var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-        message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-        // 결과를 표시할 DOM 요소 선택 후 내용 업데이트
-        var resultDiv = document.getElementById('clickLatlng');
-        if (resultDiv) {
-          resultDiv.innerHTML = message;
-        }
-      },
-      [],
-    );
-  });
+  }, []); // 빈 배열: 마운트 시 한 번만 실행
 
   return (
     <>
       <div id="map" style={{ width: '500px', height: '500px' }}></div>
-      {/* 클릭 결과를 출력할 영역 */}
       <div id="clickLatlng" style={{ marginTop: '10px' }}></div>
     </>
   );
