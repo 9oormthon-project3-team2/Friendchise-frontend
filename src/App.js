@@ -22,7 +22,10 @@ const App = () => {
           <Route path="/member-search" element={<MemberSearch />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/kakaomap" element={<HeadquarterRecommendationPage />} />
+          <Route
+            path="/headquarter/store-recommendation"
+            element={<HeadquarterRecommendationPage />}
+          />
           {/* 필요에 따라 추가 라우팅 */}
         </Routes>
       </BrowserRouter>

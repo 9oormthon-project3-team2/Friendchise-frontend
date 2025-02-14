@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Checkbox, CheckboxGroup, Stack, Text } from '@chakra-ui/react';
 
 const categoryGroupOptions = [
-  { value: '지하철역', label: '지하철역' },
   { value: '대형마트', label: '대형마트' },
   { value: '학교', label: '학교' },
   { value: '주차장', label: '주차장' },

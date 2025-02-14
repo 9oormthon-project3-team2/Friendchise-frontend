@@ -1,10 +1,18 @@
-import { Button, CircularProgress, Box, Text } from '@chakra-ui/react';
+import axiosInstance from '@/api/axiosInstance';
+import {
+  Button,
+  CircularProgress,
+  Box,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 
 const ApiButton = ({ coords, categoryGroup }) => {
   const [loading, setLoading] = useState(false);
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
+  const toast = useToast();
 
   const handleClick = async () => {
     // 전송할 데이터 구성 (필요에 따라 수정)
@@ -12,7 +20,7 @@ const ApiButton = ({ coords, categoryGroup }) => {
     setError(null);
     setResponseData(null);
 
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem('accessToken');
 
     const payload = {
       user_selected_category: categoryGroup,
@@ -21,26 +29,28 @@ const ApiButton = ({ coords, categoryGroup }) => {
     };
 
     try {
-      const response = await fetch(
-        'http://13.209.82.1:8080/headquarter/store-recommendation',
+      const response = await axiosInstance.post(
+        '/headquarter/store-recommendation',
+        payload,
         {
-          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(payload),
         },
       );
-
-      if (!response.ok) {
-        throw new Error('네트워크 응답이 올바르지 않습니다.');
-      }
 
       const data = await response.json();
       console.log('API 응답:', data);
     } catch (error) {
-      console.error('API 요청 에러:', error);
+      const errorMessage = error.response?.data?.message || error.message;
+      toast({
+        title: '정보 조회 실패',
+        description: errorMessage,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     } finally {
       setLoading(false);
     }
