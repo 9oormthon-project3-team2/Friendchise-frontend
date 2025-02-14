@@ -1,11 +1,19 @@
-import { Provider } from '@/components/ui/provider';
-import React from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
-function App({ Component, pageProps }) {
+import React from 'react';
+import KakaoMap from './components/KakaoMap';
+
+function App() {
   return (
-    <Provider>
-      <Component {...pageProps} />
-    </Provider>
+    <ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/kakaomap" element={<KakaoMap />} />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
   );
 }
 
