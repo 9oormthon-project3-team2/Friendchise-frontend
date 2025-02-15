@@ -59,7 +59,7 @@ const ApiButton = ({ coords, categoryGroup }) => {
   return (
     <Box textAlign="center">
       <Button colorScheme="blue" onClick={handleClick} isDisabled={loading}>
-        매장 입점 여부 추천받기
+        해당 위치에 매장 입점 여부 추천받기
       </Button>
 
       {loading && (
