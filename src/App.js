@@ -9,6 +9,7 @@ import MemberSearch from './pages/MemberSearch';
 import DeleteAccount from './pages/DeleteAccount';
 import RegisterPage from './pages/RegisterPage';
 import KakaoMap from './components/KakaoMap';
+import NotificationPage from './pages/NotificationPage';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/kakaomap" element={<KakaoMap />} />
+          <Route path="/notifications" element={<NotificationPage />} />
           {/* 필요에 따라 추가 라우팅 */}
         </Routes>
       </BrowserRouter>
