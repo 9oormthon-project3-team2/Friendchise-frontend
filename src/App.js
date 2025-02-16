@@ -8,6 +8,7 @@ import ChangeStoreId from './pages/ChangeStoreId';
 import MemberSearch from './pages/MemberSearch';
 import DeleteAccount from './pages/DeleteAccount';
 import RegisterPage from './pages/RegisterPage';
+import HeadquarterRecommendationPage from './pages/HeadquarterRecommendationPage';
 import KakaoMap from './components/KakaoMap';
 import NotificationPage from './pages/NotificationPage';
 
@@ -23,6 +24,10 @@ const App = () => {
           <Route path="/member-search" element={<MemberSearch />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/headquarter/store-recommendation"
+            element={<HeadquarterRecommendationPage />}
+          />
           <Route path="/kakaomap" element={<KakaoMap />} />
           <Route path="/notifications" element={<NotificationPage />} />
           {/* 필요에 따라 추가 라우팅 */}
