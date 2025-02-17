@@ -8,7 +8,10 @@ import ChangeStoreId from './pages/ChangeStoreId';
 import MemberSearch from './pages/MemberSearch';
 import DeleteAccount from './pages/DeleteAccount';
 import RegisterPage from './pages/RegisterPage';
-import HeadquarterRecommendationPage from './pages/HeadquarterRecommendationPage';
+import HeadquarterRecommendationPage from './pages/headquarter/HeadquarterRecommendationPage';
+import HeadquarterRegisterPage from './pages/headquarter/HeadquarterCreatePage';
+import ItemRegisterPage from './pages/headquarter/ItemRegisterPage';
+import HeadquarterDetailPage from './pages/headquarter/HeadquarterDetailPage';
 
 const App = () => {
   return (
@@ -22,6 +25,18 @@ const App = () => {
           <Route path="/member-search" element={<MemberSearch />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/headquarter/register"
+            element={<HeadquarterRegisterPage />}
+          />
+          <Route
+            path="/headquarter/mypage"
+            element={<HeadquarterDetailPage />}
+          />
+          <Route
+            path="/headquarter/item/register"
+            element={<ItemRegisterPage />}
+          />
           <Route
             path="/headquarter/store-recommendation"
             element={<HeadquarterRecommendationPage />}

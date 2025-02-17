@@ -5,6 +5,8 @@ import {
   Box,
   Text,
   useToast,
+  Card,
+  CardBody,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -40,8 +42,10 @@ const ApiButton = ({ coords, categoryGroup }) => {
         },
       );
 
-      const data = await response.json();
-      console.log('API 응답:', data);
+      const data = await response.data;
+      const content = data.choices[0].message.content;
+      setResponseData(content);
+      console.log('API 응답:', content);
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
       toast({
@@ -70,10 +74,12 @@ const ApiButton = ({ coords, categoryGroup }) => {
       )}
 
       {responseData && (
-        <Box mt={4}>
-          <Text>API Response:</Text>
-          <pre>{JSON.stringify(responseData, null, 2)}</pre>
-        </Box>
+        <Card mt={4}>
+          <CardBody>
+            <Text color="blue">추천 결과:</Text>
+            <pre>{responseData}</pre>
+          </CardBody>
+        </Card>
       )}
 
       {error && (

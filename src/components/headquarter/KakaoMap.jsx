@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
+import geojsonData from '@/assets/commercial_area.json';
+import PolygonLayer from './PolygonLayer';
 
 const { kakao } = window;
 
@@ -68,6 +70,7 @@ const KakaoMap = ({ setCoords }) => {
     <>
       <div style={{ width: '500px', height: '500px' }} ref={containerRef}></div>
       <div id="clickLatlng" style={{ marginTop: '10px' }}></div>
+      <PolygonLayer map={mapRef.current} geojsonData={geojsonData} />
     </>
   );
 };

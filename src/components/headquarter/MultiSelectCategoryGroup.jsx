@@ -32,7 +32,12 @@ const MultiSelectCategoryGroup = ({ setCategoryGroup }) => {
 
   return (
     <div>
-      <Text mb={2}>최대 5개까지 선택할 수 있습니다.</Text>
+      <Text mb={2} fontWeight="bold">
+        매장 입점 여부 추천에 반영하고 싶은 주변 인프라를 선택해주세요.
+      </Text>
+      <Text mb={2} fontSize="sm" color="gray.500">
+        (최대 5개까지 선택할 수 있습니다.)
+      </Text>
       <CheckboxGroup value={selectedValues} onChange={handleChange}>
         <Stack spacing={2} direction={['column', 'row']}>
           {categoryGroupOptions.map((option) => {

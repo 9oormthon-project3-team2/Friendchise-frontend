@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import KakaoMap from '../components/KakaoMap';
-import ApiButton from '../components/ApiButton';
-import MultiSelectCategoryGroup from '@/components/MultiSelectCategoryGroup';
+import KakaoMap from '../../components/headquarter/KakaoMap';
+import ApiButton from '../../components/headquarter/ApiButton';
+import MultiSelectCategoryGroup from '@/components/headquarter/MultiSelectCategoryGroup';
 import { Center, VStack } from '@chakra-ui/react';
 
 const HeadquarterRecommendationPage = () => {
