@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage';
 import HeadquarterRecommendationPage from './pages/HeadquarterRecommendationPage';
 import KakaoMap from './components/KakaoMap';
 import NotificationPage from './pages/NotificationPage';
+import CreateStoreForm from './pages/store/CreateStore';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/member-search" element={<MemberSearch />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/store" element={<CreateStoreForm />} />
           <Route
             path="/headquarter/store-recommendation"
             element={<HeadquarterRecommendationPage />}
