@@ -11,7 +11,7 @@ import RegisterPage from './pages/RegisterPage';
 import HeadquarterRecommendationPage from './pages/HeadquarterRecommendationPage';
 import KakaoMap from './components/KakaoMap';
 import NotificationPage from './pages/NotificationPage';
-
+import RecommendationStore from './pages/RecommendationStore';
 const App = () => {
   return (
     <ChakraProvider>
@@ -24,6 +24,7 @@ const App = () => {
           <Route path="/member-search" element={<MemberSearch />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/nearest-store" element={<RecommendationStore />} />
           <Route
             path="/headquarter/store-recommendation"
             element={<HeadquarterRecommendationPage />}
