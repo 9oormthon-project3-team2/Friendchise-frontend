@@ -1,6 +1,6 @@
 // src/pages/MyPage.js
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, Text, VStack, Spinner, Button, useToast } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Spinner, Button, useToast, Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 
@@ -34,16 +34,18 @@ const MyPage = () => {
 
   return (
     <Box maxW="md" mx="auto" mt={10} p={6}>
-      <Heading mb={4}>마이페이지</Heading>
+      <Flex justify="space-between" align="center" mb={4}>
+        <Heading>마이페이지</Heading>
+        <Button colorScheme="teal" onClick={() => navigate('/notifications')}>
+          내 알림창으로 이동
+        </Button>
+      </Flex>
       <VStack align="start" spacing={2}>
         <Text><strong>ID:</strong> {user.id}</Text>
         <Text><strong>Username:</strong> {user.username}</Text>
         <Text><strong>Role:</strong> {user.role}</Text>
         <Text><strong>Manage ID:</strong> {user.manageId}</Text>
       </VStack>
-      <Button mt={6} colorScheme="teal" onClick={() => navigate('/notifications')}>
-        내 알림창으로 이동
-      </Button>
     </Box>
   );
 };
