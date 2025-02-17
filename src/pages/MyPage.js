@@ -5,6 +5,7 @@ import axiosInstance from '../api/axiosInstance';
 
 const MyPage = () => {
   const [user, setUser] = useState(null);
+  const [detailedData, setDetailedData] = useState(null);
   const toast = useToast();
 
   useEffect(() => {
@@ -14,7 +15,20 @@ const MyPage = () => {
         const response = await axiosInstance.get('/manager/mypage', {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
+        const userData = response.data;
         setUser(response.data);
+
+        if (userData.role == 'HEADQUARTER') {
+          const headQuarterResponse = await axiosInstance.get('/headquarter', {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          });
+          setDetailedData(headQuarterResponse.data);
+        } else if (userData.role == 'STORE') {
+          const storeReponse = await axiosInstance.get('/store', {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          });
+          setDetailedData(storeReponse.data);
+        }
       } catch (error) {
         toast({
           title: '정보 조회 실패',
@@ -38,6 +52,11 @@ const MyPage = () => {
         <Text><strong>Username:</strong> {user.username}</Text>
         <Text><strong>Role:</strong> {user.role}</Text>
         <Text><strong>Manage ID:</strong> {user.manageId}</Text>
+        {detailedData && (
+          <Text>
+            <string>영업장 정보:</string> {JSON.stringify(detailedData)}
+          </Text>
+        )}
       </VStack>
     </Box>
   );
