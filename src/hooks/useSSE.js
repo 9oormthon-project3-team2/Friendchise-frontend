@@ -23,9 +23,12 @@ const useSSE = (storeId, onNewNotification) => {
           return;
         }
 
-        // SSE로 받은 알림에는 고유 id가 없으므로, 임시로 Date.now() 사용
+        // 서버에서 전달한 notificationId를 우선 사용. 없으면 fallback.
+        const notificationId = notification.notificationId
+          ? parseInt(notification.notificationId, 10)
+          : null;
         const notificationWithId = {
-          id: Date.now(),
+          id: notificationId !== null ? notificationId : Date.now(),
           ...notification,
         };
 

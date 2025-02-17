@@ -1,4 +1,3 @@
-// src/pages/NotificationPage.js
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   Box,
@@ -9,6 +8,8 @@ import {
   Badge,
   Spinner,
   VStack,
+  Button,
+  HStack,
 } from '@chakra-ui/react';
 import axiosInstance from '../api/axiosInstance';
 import { jwtDecode } from 'jwt-decode';
@@ -19,7 +20,7 @@ const NotificationPage = () => {
   const [loading, setLoading] = useState(true);
   const [storeId, setStoreId] = useState(null);
 
-  // 🔹 JWT에서 storeId 추출
+  // JWT에서 storeId 추출
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
@@ -79,10 +80,47 @@ const NotificationPage = () => {
   // 🔹 SSE 구독
   useSSE(storeId, handleNewNotification);
 
-  // 🔹 notifications가 바뀔 때마다 확인
-  useEffect(() => {
-    console.log('🔎 현재 notifications 상태:', notifications);
-  }, [notifications]);
+  // ✅ 읽음 처리 함수
+  const handleMarkAsRead = async (notificationId) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) return;
+
+    try {
+      await axiosInstance.patch(
+        `/notifications/${notificationId}/read`,
+        {},
+        { headers: { Authorization: `Bearer ${accessToken}` } },
+      );
+      // 프론트 상태 업데이트 (isRead = true로 변경)
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === notificationId ? { ...n, isRead: true } : n)),
+      );
+    } catch (error) {
+      console.error(
+        '❌ 읽음 처리 실패:',
+        error.response?.data || error.message,
+      );
+    }
+  };
+
+  // ✅ 알림 삭제 함수
+  const handleDeleteNotification = async (notificationId) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) return;
+
+    try {
+      await axiosInstance.delete(`/notifications/${notificationId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      // 프론트 상태에서 해당 알림 제거
+      setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
+    } catch (error) {
+      console.error(
+        '❌ 알림 삭제 실패:',
+        error.response?.data || error.message,
+      );
+    }
+  };
 
   if (loading) return <Spinner mt={10} />;
 
@@ -106,6 +144,24 @@ const NotificationPage = () => {
                   {!notification.isRead && <Badge colorScheme="red">NEW</Badge>}
                 </Text>
                 <Text>{notification.content}</Text>
+                <HStack spacing={2} mt={2}>
+                  {!notification.isRead && (
+                    <Button
+                      size="sm"
+                      colorScheme="blue"
+                      onClick={() => handleMarkAsRead(notification.id)}
+                    >
+                      읽음
+                    </Button>
+                  )}
+                  <Button
+                    size="sm"
+                    colorScheme="red"
+                    onClick={() => handleDeleteNotification(notification.id)}
+                  >
+                    삭제
+                  </Button>
+                </HStack>
               </ListItem>
             ))}
           </List>
