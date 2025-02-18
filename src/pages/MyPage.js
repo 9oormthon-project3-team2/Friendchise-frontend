@@ -48,8 +48,10 @@ const MyPage = () => {
   }, [toast]);
 
   const handleUpdateCompany = () => {
-    if (detailedData && detailedData.id) {
-      navigate('/store')
+    if (user && user.role == 'STORE') {
+      navigate('/createStore')
+    } else if (user.role == 'HEADQUARTER'){
+      navigate('/headquarter/register')
     }
   }
 
