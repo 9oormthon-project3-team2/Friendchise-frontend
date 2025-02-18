@@ -6,13 +6,17 @@ import {
   Text,
   VStack,
   Spinner,
+  Button,
   useToast,
+  Flex,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 
 const MyPage = () => {
   const [user, setUser] = useState(null);
   const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +43,12 @@ const MyPage = () => {
 
   return (
     <Box maxW="md" mx="auto" mt={10} p={6}>
-      <Heading mb={4}>마이페이지</Heading>
+      <Flex justify="space-between" align="center" mb={4}>
+        <Heading>마이페이지</Heading>
+        <Button colorScheme="teal" onClick={() => navigate('/notifications')}>
+          내 알림창으로 이동
+        </Button>
+      </Flex>
       <VStack align="start" spacing={2}>
         <Text>
           <strong>ID:</strong> {user.id}

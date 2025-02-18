@@ -25,6 +25,11 @@ const App = () => {
           <Route path="/member-search" element={<MemberSearch />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/nearest-store" element={<RecommendationStore />} />
+          <Route
+            path="/headquarter/store-recommendation"
+            element={<HeadquarterRecommendationPage />}
+          />
           <Route
             path="/headquarter/register"
             element={<HeadquarterRegisterPage />}
@@ -41,6 +46,7 @@ const App = () => {
             path="/headquarter/store-recommendation"
             element={<HeadquarterRecommendationPage />}
           />
+          <Route path="/notifications" element={<NotificationPage />} />
           {/* 필요에 따라 추가 라우팅 */}
         </Routes>
       </BrowserRouter>
