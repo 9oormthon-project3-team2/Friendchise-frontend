@@ -14,6 +14,7 @@ import ItemRegisterPage from './pages/headquarter/ItemRegisterPage';
 import HeadquarterDetailPage from './pages/headquarter/HeadquarterDetailPage';
 import NotificationPage from '@/pages/NotificationPage';
 import RecommendationStore from '@/pages/RecommendationStore';
+import CreateStore from '@/pages/store/CreateStore';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/nearest-store" element={<RecommendationStore />} />
+          <Route path="/createStore" element={<CreateStore />} />
           <Route
             path="/headquarter/store-recommendation"
             element={<HeadquarterRecommendationPage />}

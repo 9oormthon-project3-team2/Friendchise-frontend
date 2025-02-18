@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import {
-    Box,
-    Button,
-    Input,
-    FormControl,
-    FormLabel,
-    Heading,
-    VStack,
-    useToast
-  } from '@chakra-ui/react';
+  Box,
+  Button,
+  Input,
+  FormControl,
+  FormLabel,
+  Heading,
+  VStack,
+  useToast, HStack,
+} from '@chakra-ui/react';
 import axiosInstance from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import AddressSearchModal from './AddressSearchModal';
 
 const CreateStoreForm = () => {
     // form 데이터를 관리하는 state
@@ -36,6 +37,16 @@ const CreateStoreForm = () => {
         [name]: value,
       }));
     };
+
+  const handleAddressSelect = (addressData) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      address: addressData.address || '',
+      roadAddress: addressData.roadAddress || '',
+      zoneNumber: addressData.zoneNumber || '',
+      dong: addressData.dong || '',
+    }));
+  };
   
     // 폼 제출 시 API 요청
     const handleSubmit = async (e) => {
@@ -87,12 +98,17 @@ const CreateStoreForm = () => {
           <VStack spacing={4}>
             <FormControl id="address" isRequired>
               <FormLabel>Address</FormLabel>
-              <Input
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                placeholder="주소 입력"
-              />
+              <HStack>
+                <Input
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  placeholder="주소가 선택됩니다"
+                  readOnly
+                />
+                {/* 주소검색 모달 컴포넌트 */}
+                <AddressSearchModal onAddressSelect={handleAddressSelect} />
+              </HStack>
             </FormControl>
             <FormControl id="roadAddress" isRequired>
               <FormLabel>Road Address</FormLabel>
