@@ -44,6 +44,8 @@ const CreateStoreForm = () => {
       address: addressData.address || '',
       roadAddress: addressData.roadAddress || '',
       zoneNumber: addressData.zoneNumber || '',
+      x: addressData.x || '',
+      y: addressData.y || '',
       dong: addressData.dong || '',
     }));
   };
@@ -117,6 +119,7 @@ const CreateStoreForm = () => {
                 value={formData.roadAddress}
                 onChange={handleChange}
                 placeholder="도로명 주소 입력"
+                readOnly
               />
             </FormControl>
             <FormControl id="zoneNumber" isRequired>
@@ -126,6 +129,7 @@ const CreateStoreForm = () => {
                 value={formData.zoneNumber}
                 onChange={handleChange}
                 placeholder="우편번호 입력"
+                readOnly
               />
             </FormControl>
             <FormControl id="dong" isRequired>
@@ -135,6 +139,7 @@ const CreateStoreForm = () => {
                 value={formData.dong}
                 onChange={handleChange}
                 placeholder="동 입력"
+                readOnly
               />
             </FormControl>
             <FormControl id="x" isRequired>
@@ -144,6 +149,7 @@ const CreateStoreForm = () => {
                 value={formData.x}
                 onChange={handleChange}
                 placeholder="X 좌표 입력"
+                readOnly
               />
             </FormControl>
             <FormControl id="y" isRequired>
@@ -153,6 +159,7 @@ const CreateStoreForm = () => {
                 value={formData.y}
                 onChange={handleChange}
                 placeholder="Y 좌표 입력"
+                readOnly
               />
             </FormControl>
             <FormControl id="franchiseName" isRequired>
