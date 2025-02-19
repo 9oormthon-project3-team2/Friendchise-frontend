@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { NotificationsProvider } from './context/NotificationsContext';
+
 import LoginPage from './pages/LoginPage';
 import MyPage from './pages/MyPage';
 import ChangePassword from './pages/ChangePassword';
@@ -15,45 +17,49 @@ import HeadquarterDetailPage from './pages/headquarter/HeadquarterDetailPage';
 import RecommendationStore from './pages/RecommendationStore';
 import NotificationPage from './pages/NotificationPage';
 import PromotionPage from './pages/PromotionPage';
+import SSEManager from './components/SSEManager';
 
 const App = () => {
   return (
     <ChakraProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="/change-store-id" element={<ChangeStoreId />} />
-          <Route path="/member-search" element={<MemberSearch />} />
-          <Route path="/delete-account" element={<DeleteAccount />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/nearest-store" element={<RecommendationStore />} />
-          <Route
-            path="/headquarter/store-recommendation"
-            element={<HeadquarterRecommendationPage />}
-          />
-          <Route
-            path="/headquarter/register"
-            element={<HeadquarterRegisterPage />}
-          />
-          <Route
-            path="/headquarter/mypage"
-            element={<HeadquarterDetailPage />}
-          />
-          <Route
-            path="/headquarter/item/register"
-            element={<ItemRegisterPage />}
-          />
-          <Route
-            path="/headquarter/store-recommendation"
-            element={<HeadquarterRecommendationPage />}
-          />
-          <Route path="/notifications" element={<NotificationPage />} />
-          <Route path="/promotions" element={<PromotionPage />} />
-          {/* 필요에 따라 추가 라우팅 */}
-        </Routes>
-      </BrowserRouter>
+      <NotificationsProvider>
+        <BrowserRouter>
+          <SSEManager />
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/change-store-id" element={<ChangeStoreId />} />
+            <Route path="/member-search" element={<MemberSearch />} />
+            <Route path="/delete-account" element={<DeleteAccount />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/nearest-store" element={<RecommendationStore />} />
+            <Route
+              path="/headquarter/store-recommendation"
+              element={<HeadquarterRecommendationPage />}
+            />
+            <Route
+              path="/headquarter/register"
+              element={<HeadquarterRegisterPage />}
+            />
+            <Route
+              path="/headquarter/mypage"
+              element={<HeadquarterDetailPage />}
+            />
+            <Route
+              path="/headquarter/item/register"
+              element={<ItemRegisterPage />}
+            />
+            <Route
+              path="/headquarter/store-recommendation"
+              element={<HeadquarterRecommendationPage />}
+            />
+            <Route path="/notifications" element={<NotificationPage />} />
+            <Route path="/promotions" element={<PromotionPage />} />
+            {/* 필요에 따라 추가 라우팅 */}
+          </Routes>
+        </BrowserRouter>
+      </NotificationsProvider>
     </ChakraProvider>
   );
 };
