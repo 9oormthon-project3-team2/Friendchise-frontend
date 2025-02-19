@@ -15,6 +15,9 @@ import HeadquarterDetailPage from './pages/headquarter/HeadquarterDetailPage';
 import NotificationPage from '@/pages/NotificationPage';
 import RecommendationStore from '@/pages/RecommendationStore';
 import CreateStore from '@/pages/store/CreateStore';
+import RecommendationStore from './pages/RecommendationStore';
+import NotificationPage from './pages/NotificationPage';
+import PromotionPage from './pages/PromotionPage';
 
 const App = () => {
   return (
@@ -46,7 +49,12 @@ const App = () => {
             path="/headquarter/item/register"
             element={<ItemRegisterPage />}
           />
+          <Route
+            path="/headquarter/store-recommendation"
+            element={<HeadquarterRecommendationPage />}
+          />
           <Route path="/notifications" element={<NotificationPage />} />
+          <Route path="/promotions" element={<PromotionPage />} />
           {/* 필요에 따라 추가 라우팅 */}
         </Routes>
       </BrowserRouter>
