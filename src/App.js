@@ -24,7 +24,9 @@ import SSEManager from './components/SSEManager';
 const App = () => {
   return (
     <ChakraProvider>
+      <NotificationsProvider>
       <BrowserRouter>
+        <SSEManager />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/mypage" element={<MyPage />} />
@@ -61,6 +63,7 @@ const App = () => {
           {/* 필요에 따라 추가 라우팅 */}
         </Routes>
       </BrowserRouter>
+      </NotificationsProvider>
     </ChakraProvider>
   );
 };
