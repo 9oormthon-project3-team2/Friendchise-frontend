@@ -12,8 +12,6 @@ import HeadquarterRecommendationPage from './pages/headquarter/HeadquarterRecomm
 import HeadquarterRegisterPage from './pages/headquarter/HeadquarterCreatePage';
 import ItemRegisterPage from './pages/headquarter/ItemRegisterPage';
 import HeadquarterDetailPage from './pages/headquarter/HeadquarterDetailPage';
-import NotificationPage from '@/pages/NotificationPage';
-import RecommendationStore from '@/pages/RecommendationStore';
 import CreateStore from '@/pages/store/CreateStore';
 import RecommendationStore from './pages/RecommendationStore';
 import NotificationPage from './pages/NotificationPage';
