@@ -40,10 +40,6 @@ const App = () => {
             <Route path="/createStore" element={<CreateStore />} />
             <Route path="/updateStore" element={<UpdateStore />} />
             <Route
-              path="/headquarter/store-recommendation"
-              element={<HeadquarterRecommendationPage />}
-            />
-            <Route
               path="/headquarter/register"
               element={<HeadquarterRegisterPage />}
             />
@@ -54,10 +50,6 @@ const App = () => {
             <Route
               path="/headquarter/item/register"
               element={<ItemRegisterPage />}
-            />
-            <Route
-              path="/headquarter/store-recommendation"
-              element={<HeadquarterRecommendationPage />}
             />
             <Route
               path="/headquarter/store-recommendation-stream"
