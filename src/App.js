@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { NotificationsProvider } from './context/NotificationsContext';
+
 import LoginPage from './pages/LoginPage';
 import MyPage from './pages/MyPage';
 import ChangePassword from './pages/ChangePassword';
@@ -17,6 +19,7 @@ import RecommendationStore from './pages/RecommendationStore';
 import NotificationPage from './pages/NotificationPage';
 import PromotionPage from './pages/PromotionPage';
 import UpdateStore from './pages/store/UpdateStore';
+import SSEManager from './components/SSEManager';
 
 const App = () => {
   return (
