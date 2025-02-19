@@ -20,6 +20,7 @@ import NotificationPage from './pages/NotificationPage';
 import PromotionPage from './pages/PromotionPage';
 import UpdateStore from './pages/store/UpdateStore';
 import SSEManager from './components/SSEManager';
+import HeadquarterStreamRecommendationPage from '@/pages/headquarter/HeadquarterStreamRecommendationPage';
 
 const App = () => {
   return (
@@ -71,6 +72,10 @@ const App = () => {
           <Route
             path="/headquarter/store-recommendation"
             element={<HeadquarterRecommendationPage />}
+          />
+          <Route
+            path="/headquarter/store-recommendation-stream"
+            element={<HeadquarterStreamRecommendationPage />}
           />
           <Route path="/notifications" element={<NotificationPage />} />
           <Route path="/promotions" element={<PromotionPage />} />

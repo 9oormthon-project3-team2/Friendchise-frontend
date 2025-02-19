@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import KakaoMap from '../components/KakaoMap';
-import ApiButton from '../components/ApiButton';
-import MultiSelectCategoryGroup from '@/components/MultiSelectCategoryGroup';
+import KakaoMap from '../../components/headquarter/KakaoMap';
+import ApiButton from '../../components/headquarter/ApiButton';
+import MultiSelectCategoryGroup from '@/components/headquarter/MultiSelectCategoryGroup';
 import { Center, VStack } from '@chakra-ui/react';
+import StreamApiButton from '@/components/headquarter/StreamApiButton';
 
-const HeadquarterRecommendationPage = () => {
+const HeadquarterStreamRecommendationPage = () => {
   const [coords, setCoords] = useState({ lat: null, lng: null });
   const [categoryGroup, setCategoryGroup] = useState([]);
 
@@ -14,11 +15,11 @@ const HeadquarterRecommendationPage = () => {
         <VStack spacing={4}>
           <KakaoMap setCoords={setCoords} />
           <MultiSelectCategoryGroup setCategoryGroup={setCategoryGroup} />
-          <ApiButton coords={coords} categoryGroup={categoryGroup} />
+          <StreamApiButton coords={coords} categoryGroup={categoryGroup} />
         </VStack>
       </Center>
     </>
   );
 };
 
-export default HeadquarterRecommendationPage;
+export default HeadquarterStreamRecommendationPage;
