@@ -31,9 +31,14 @@ const AddressSearchModal = ({ onAddressSelect }) => {
   const handleSearch = async () => {
     if (!address.trim()) return;
     setLoading(true);
+    const accessToken = localStorage.getItem('accessToken');
     try {
       const response = await axiosInstance.get('/store/search', {
         params: { address },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
       });
 
       setResults(response.data);

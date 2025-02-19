@@ -16,6 +16,7 @@ import CreateStore from '@/pages/store/CreateStore';
 import RecommendationStore from './pages/RecommendationStore';
 import NotificationPage from './pages/NotificationPage';
 import PromotionPage from './pages/PromotionPage';
+import UpdateStore from './pages/store/UpdateStore';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/nearest-store" element={<RecommendationStore />} />
           <Route path="/createStore" element={<CreateStore />} />
+          <Route path="/updateStore" element={<UpdateStore />} />
           <Route
             path="/headquarter/store-recommendation"
             element={<HeadquarterRecommendationPage />}

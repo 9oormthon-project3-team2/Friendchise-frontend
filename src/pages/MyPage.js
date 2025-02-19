@@ -49,7 +49,7 @@ const MyPage = () => {
 
   const handleUpdateCompany = () => {
     if (user && user.role == 'STORE') {
-      navigate('/createStore')
+      navigate('/updateStore', {state: {data: detailedData}})
     } else if (user.role == 'HEADQUARTER'){
       navigate('/headquarter/register')
     }
