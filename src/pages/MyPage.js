@@ -100,16 +100,23 @@ const MyPage = () => {
     <Box maxW="md" mx="auto" mt={10} p={6}>
       <Flex justify="space-between" align="center" mb={4}>
         <Heading>마이페이지</Heading>
-        <Button colorScheme="teal" onClick={() => navigate('/notifications')}>
-          내 알림창으로 이동
-        </Button>
+        {user.role === 'HEADQUARTER' && (
+          <Button colorScheme="teal" onClick={() => navigate('/promotions')}>
+            프로모션 관리
+          </Button>
+        )}
+        {user.role === 'STORE' && (
+          <Button colorScheme="teal" onClick={() => navigate('/notifications')}>
+            알림창으로 이동
+          </Button>
+        )}
       </Flex>
       <VStack align="start" spacing={2}>
-        <Text><strong>ID:</strong> {user.id}</Text>
-        <Text><strong>Username:</strong> {user.username}</Text>
-        <Text><strong>Role:</strong> {user.role}</Text>
+        <Text><strong>아이디:</strong> {user.id}</Text>
+        <Text><strong>이름:</strong> {user.username}</Text>
+        <Text><strong>역할:</strong> {user.role}</Text>
         {user.role === 'HEADQUARTER' && (
-          <Text><strong>Certification Number:</strong> {user.certificationNumber}</Text>
+          <Text><strong>인증번호:</strong> {user.certificationNumber}</Text>
         )}
       </VStack>
       {detailedData && (
