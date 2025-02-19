@@ -108,6 +108,9 @@ const MyPage = () => {
         <Text><strong>ID:</strong> {user.id}</Text>
         <Text><strong>Username:</strong> {user.username}</Text>
         <Text><strong>Role:</strong> {user.role}</Text>
+        {user.role === 'HEADQUARTER' && (
+          <Text><strong>Certification Number:</strong> {user.certificationNumber}</Text>
+        )}
       </VStack>
       {detailedData && (
         <>
