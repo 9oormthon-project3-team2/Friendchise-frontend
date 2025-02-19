@@ -11,6 +11,7 @@ import {
   VStack,
   Button,
   HStack,
+  useToast,
 } from '@chakra-ui/react';
 import axiosInstance from '../api/axiosInstance';
 import { jwtDecode } from 'jwt-decode';
@@ -25,6 +26,7 @@ const NotificationPage = () => {
   } = useContext(NotificationsContext);
   const [storeId, setStoreId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const toast = useToast();
 
   // JWT에서 storeId 추출
   useEffect(() => {
@@ -42,7 +44,7 @@ const NotificationPage = () => {
     }
   }, []);
 
-  // 초기 알림 목록 조회
+  // 초기 알림 목록 조회 및 데이터 정규화
   useEffect(() => {
     const fetchNotifications = async () => {
       const accessToken = localStorage.getItem('accessToken');
@@ -56,7 +58,12 @@ const NotificationPage = () => {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         console.log('✅ 알림 목록:', response.data);
-        updateNotifications(response.data);
+        // 응답 데이터에서 notificationId가 있으면 이를 숫자로 변환하여 id로 사용
+        const normalizedNotifications = response.data.map((n) => ({
+          ...n,
+          id: n.notificationId ? parseInt(n.notificationId, 10) : n.id,
+        }));
+        updateNotifications(normalizedNotifications);
       } catch (error) {
         console.error(
           '❌ 알림 조회 실패:',
@@ -83,11 +90,24 @@ const NotificationPage = () => {
         { headers: { Authorization: `Bearer ${accessToken}` } },
       );
       markNotificationAsRead(notificationId);
+      toast({
+        title: '알림 읽음 처리 완료',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error(
         '❌ 읽음 처리 실패:',
         error.response?.data || error.message,
       );
+      toast({
+        title: '알림 읽음 처리 실패',
+        description: error.response?.data?.message || error.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
@@ -100,11 +120,24 @@ const NotificationPage = () => {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       deleteNotification(notificationId);
+      toast({
+        title: '알림 삭제 완료',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error(
         '❌ 알림 삭제 실패:',
         error.response?.data || error.message,
       );
+      toast({
+        title: '알림 삭제 실패',
+        description: error.response?.data?.message || error.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
