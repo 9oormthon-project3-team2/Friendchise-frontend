@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+// src/pages/NotificationPage.js
+import React, { useEffect, useContext, useState } from 'react';
 import {
   Box,
   Heading,
@@ -13,12 +14,17 @@ import {
 } from '@chakra-ui/react';
 import axiosInstance from '../api/axiosInstance';
 import { jwtDecode } from 'jwt-decode';
-import useSSE from '../hooks/useSSE';
+import { NotificationsContext } from '../context/NotificationsContext';
 
 const NotificationPage = () => {
-  const [notifications, setNotifications] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    notifications,
+    updateNotifications,
+    markNotificationAsRead,
+    deleteNotification,
+  } = useContext(NotificationsContext);
   const [storeId, setStoreId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // JWT에서 storeId 추출
   useEffect(() => {
@@ -36,7 +42,7 @@ const NotificationPage = () => {
     }
   }, []);
 
-  // 🔹 초기 알림 목록 조회
+  // 초기 알림 목록 조회
   useEffect(() => {
     const fetchNotifications = async () => {
       const accessToken = localStorage.getItem('accessToken');
@@ -45,13 +51,12 @@ const NotificationPage = () => {
         setLoading(false);
         return;
       }
-
       try {
         const response = await axiosInstance.get('/notifications/my', {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         console.log('✅ 알림 목록:', response.data);
-        setNotifications(response.data);
+        updateNotifications(response.data);
       } catch (error) {
         console.error(
           '❌ 알림 조회 실패:',
@@ -65,36 +70,19 @@ const NotificationPage = () => {
     if (storeId) {
       fetchNotifications();
     }
-  }, [storeId]);
+  }, [storeId, updateNotifications]);
 
-  // 🔹 SSE에서 새 알림을 받을 때 처리할 콜백
-  const handleNewNotification = useCallback((newNotification) => {
-    // newNotification: { id, title, content, ... } 형태
-    setNotifications((prev) => {
-      const updated = [newNotification, ...prev];
-      console.log('🔄 알림 상태 업데이트:', updated);
-      return updated;
-    });
-  }, []);
-
-  // 🔹 SSE 구독
-  useSSE(storeId, handleNewNotification);
-
-  // ✅ 읽음 처리 함수
+  // 읽음 처리 함수
   const handleMarkAsRead = async (notificationId) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) return;
-
     try {
       await axiosInstance.patch(
         `/notifications/${notificationId}/read`,
         {},
         { headers: { Authorization: `Bearer ${accessToken}` } },
       );
-      // 프론트 상태 업데이트 (isRead = true로 변경)
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === notificationId ? { ...n, isRead: true } : n)),
-      );
+      markNotificationAsRead(notificationId);
     } catch (error) {
       console.error(
         '❌ 읽음 처리 실패:',
@@ -103,17 +91,15 @@ const NotificationPage = () => {
     }
   };
 
-  // ✅ 알림 삭제 함수
+  // 알림 삭제 함수
   const handleDeleteNotification = async (notificationId) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) return;
-
     try {
       await axiosInstance.delete(`/notifications/${notificationId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      // 프론트 상태에서 해당 알림 제거
-      setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
+      deleteNotification(notificationId);
     } catch (error) {
       console.error(
         '❌ 알림 삭제 실패:',
@@ -134,7 +120,7 @@ const NotificationPage = () => {
           <List spacing={3}>
             {notifications.map((notification) => (
               <ListItem
-                key={notification.id} // 고유 key
+                key={notification.id}
                 p={3}
                 borderWidth="1px"
                 borderRadius="md"
