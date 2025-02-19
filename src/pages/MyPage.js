@@ -1,22 +1,7 @@
 // src/pages/MyPage.js
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Box,
-  Heading,
-  Text,
-  VStack,
-  Spinner,
-  Button,
-  useToast,
-  Flex,
-  Divider,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
-} from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Spinner, Button, useToast, Flex,
+  Divider, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 
@@ -33,19 +18,19 @@ const MyPage = () => {
       const accessToken = localStorage.getItem('accessToken');
       try {
         const response = await axiosInstance.get('/manager/mypage', {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${accessToken}` }
         });
         const userData = response.data;
         setUser(response.data);
 
         if (userData.role == 'HEADQUARTER') {
           const headQuarterResponse = await axiosInstance.get('/headquarter', {
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: { Authorization: `Bearer ${accessToken}` }
           });
           setDetailedData(headQuarterResponse.data);
         } else if (userData.role == 'STORE') {
           const storeReponse = await axiosInstance.get('/store', {
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: { Authorization: `Bearer ${accessToken}` }
           });
           setDetailedData(storeReponse.data);
         }
@@ -55,7 +40,7 @@ const MyPage = () => {
           description: error.response?.data?.message || error.message,
           status: 'error',
           duration: 3000,
-          isClosable: true,
+          isClosable: true
         });
       }
     };
@@ -64,49 +49,50 @@ const MyPage = () => {
 
   const handleUpdateCompany = () => {
     if (user && user.role == 'STORE') {
-      navigate('/updateStore', { state: { data: detailedData } });
-    } else if (user.role == 'HEADQUARTER') {
-      navigate('/headquarter/register');
+      navigate('/updateStore', {state: {data: detailedData}})
+    } else if (user.role == 'HEADQUARTER'){
+      navigate('/headquarter/register')
     }
-  };
+  }
 
   const deleteCompany = async () => {
     const accessToken = localStorage.getItem('accessToken');
-    try {
+    try{
       if (user && user.role == 'HEADQUARTER') {
         const headQuarterResponse = await axiosInstance.delete('/headquarter', {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${accessToken}` }
         });
         setDetailedData(headQuarterResponse.data);
       } else if (user && user.role == 'STORE') {
         const storeReponse = await axiosInstance.delete('/store', {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${accessToken}` }
         });
         setDetailedData(storeReponse.data);
       }
+
     } catch (error) {
       toast({
         title: '삭제 실패',
         description: error.response?.data?.message || error.message,
         status: 'Delete Error',
         duration: 3000,
-        isClosable: true,
+        isClosable: true
       });
     }
-  };
+  }
 
   const onDeleteButtonClick = () => {
     setIsAlertOpen(true);
-  };
+  }
 
   const onConfirmDelete = async () => {
     setIsAlertOpen(false);
     await deleteCompany();
-  };
+  }
 
   const onCancelDelete = () => {
     setIsAlertOpen(false);
-  };
+  }
 
   if (!user) return <Spinner mt={10} />;
 
@@ -114,20 +100,24 @@ const MyPage = () => {
     <Box maxW="md" mx="auto" mt={10} p={6}>
       <Flex justify="space-between" align="center" mb={4}>
         <Heading>마이페이지</Heading>
-        <Button colorScheme="teal" onClick={() => navigate('/notifications')}>
-          내 알림창으로 이동
-        </Button>
+        {user.role === 'HEADQUARTER' && (
+          <Button colorScheme="teal" onClick={() => navigate('/promotions')}>
+            프로모션 관리
+          </Button>
+        )}
+        {user.role === 'STORE' && (
+          <Button colorScheme="teal" onClick={() => navigate('/notifications')}>
+            알림창으로 이동
+          </Button>
+        )}
       </Flex>
       <VStack align="start" spacing={2}>
-        <Text>
-          <strong>ID:</strong> {user.id}
-        </Text>
-        <Text>
-          <strong>Username:</strong> {user.username}
-        </Text>
-        <Text>
-          <strong>Role:</strong> {user.role}
-        </Text>
+        <Text><strong>아이디:</strong> {user.id}</Text>
+        <Text><strong>이름:</strong> {user.username}</Text>
+        <Text><strong>역할:</strong> {user.role}</Text>
+        {user.role === 'HEADQUARTER' && (
+          <Text><strong>인증번호:</strong> {user.certificationNumber}</Text>
+        )}
       </VStack>
       {detailedData && (
         <>
@@ -137,21 +127,11 @@ const MyPage = () => {
               영업장 정보
             </Heading>
             <VStack align="start" spacing={2}>
-              <Text>
-                <strong>주소:</strong> {detailedData.address}
-              </Text>
-              <Text>
-                <strong>동:</strong> {detailedData.dong}
-              </Text>
-              <Text>
-                <strong>X 좌표:</strong> {detailedData.pointX}
-              </Text>
-              <Text>
-                <strong>Y 좌표:</strong> {detailedData.pointY}
-              </Text>
-              <Text>
-                <strong>프랜차이즈 명:</strong> {detailedData.franchiseName}
-              </Text>
+              <Text><strong>주소:</strong> {detailedData.address}</Text>
+              <Text><strong>동:</strong> {detailedData.dong}</Text>
+              <Text><strong>X 좌표:</strong> {detailedData.pointX}</Text>
+              <Text><strong>Y 좌표:</strong> {detailedData.pointY}</Text>
+              <Text><strong>프랜차이즈 명:</strong> {detailedData.franchiseName}</Text>
             </VStack>
             <Flex mt={4} justify="flex-end">
               <Button colorScheme="blue" mr={2} onClick={handleUpdateCompany}>
@@ -175,7 +155,9 @@ const MyPage = () => {
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               삭제 확인
             </AlertDialogHeader>
-            <AlertDialogBody>정말로 삭제하시겠습니까?</AlertDialogBody>
+            <AlertDialogBody>
+              정말로 삭제하시겠습니까?
+            </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onCancelDelete}>
                 아니오
