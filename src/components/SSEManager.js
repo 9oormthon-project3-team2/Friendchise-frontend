@@ -16,6 +16,7 @@ const SSEManager = () => {
 
   // 항상 useState를 호출
   const [storeId, setStoreId] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     // 로그인 페이지면 SSE 로직 실행하지 않음
@@ -36,6 +37,7 @@ const SSEManager = () => {
         return;
       }
       setStoreId(decoded.storeId);
+      setToken(accessToken);
       console.log('SSEManager: JWT에서 추출한 storeId:', decoded.storeId);
     } catch (error) {
       console.error('SSEManager: JWT 디코딩 실패:', error);
@@ -59,8 +61,8 @@ const SSEManager = () => {
     [toast, addNotification, isLoginPage],
   );
 
-  // storeId가 null이면 useSSE 내부에서 아무 작업도 하지 않도록 처리합니다.
-  useSSE(storeId, handleNewNotification);
+  // storeId, token 모두 준비되어야 SSE 연결을 시도합니다.
+  useSSE(storeId, token, handleNewNotification);
 
   return null;
 };
