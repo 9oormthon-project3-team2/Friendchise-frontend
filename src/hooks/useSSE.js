@@ -1,18 +1,20 @@
 // src/hooks/useSSE.js
 import { useEffect } from 'react';
 
-const useSSE = (storeId, onNewNotification) => {
+const useSSE = (storeId, token, onNewNotification) => {
   useEffect(() => {
-    if (!storeId) {
-      console.warn('❌ storeId가 없음, SSE 실행 안됨');
+    if (!storeId || !token) {
+      console.warn('❌ storeId 또는 token이 없음, SSE 실행 안됨');
       return;
     }
 
     console.log(`✅ SSE 실행됨, storeId: ${storeId}`);
+    //배포시 서버 수정 필요
     const BASE_URL = 'http://localhost:8080';
-    const eventSource = new EventSource(
-      `${BASE_URL}/notifications/subscribe/${storeId}`,
-    );
+    const eventSourceUrl = `${BASE_URL}/notifications/subscribe/${storeId}?token=${encodeURIComponent(
+      token,
+    )}`;
+    const eventSource = new EventSource(eventSourceUrl);
 
     eventSource.addEventListener('Promotion', (event) => {
       console.log('📢 Promotion 이벤트 수신:', event);
@@ -32,8 +34,6 @@ const useSSE = (storeId, onNewNotification) => {
           ...notification,
         };
 
-        // ❌ 기존: onNewNotification((prev) => [notificationWithId, ...prev]);
-        // ⭕ 수정: 알림 "객체"만 콜백으로 넘겨줌
         onNewNotification(notificationWithId);
       } catch (error) {
         console.error('❌ 알림 데이터 파싱 오류:', error);
@@ -53,7 +53,7 @@ const useSSE = (storeId, onNewNotification) => {
       console.log('❌ SSE 연결 해제');
       eventSource.close();
     };
-  }, [storeId, onNewNotification]);
+  }, [storeId, token, onNewNotification]);
 };
 
 export default useSSE;
