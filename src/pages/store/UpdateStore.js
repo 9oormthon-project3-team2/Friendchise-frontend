@@ -99,7 +99,7 @@ const UpdateStoreForm = () => {
         isClosable: true,
       });
       // 필요에 따라 페이지 이동 (예: 리스트 페이지)
-      navigate('/mypage');
+      navigate('/manager/mypage');
     } catch (error) {
       toast({
         title: 'Store 생성 실패',
