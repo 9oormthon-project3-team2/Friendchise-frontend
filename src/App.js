@@ -23,6 +23,7 @@ import LoginPageCustomer from './pages/LoginPageCustomer';
 import MyPageCustomer from './pages/MyPageCustomer';
 import UpdateStore from './pages/store/UpdateStore';
 import SSEManager from './components/SSEManager';
+import HeadquarterStreamRecommendationPage from '@/pages/headquarter/HeadquarterStreamRecommendationPage';
 
 
 const App = () => {
@@ -42,10 +43,6 @@ const App = () => {
             <Route path="/createStore" element={<CreateStore />} />
             <Route path="/updateStore" element={<UpdateStore />} />
             <Route
-              path="/headquarter/store-recommendation"
-              element={<HeadquarterRecommendationPage />}
-            />
-            <Route
               path="/headquarter/register"
               element={<HeadquarterRegisterPage />}
             />
@@ -58,8 +55,8 @@ const App = () => {
               element={<ItemRegisterPage />}
             />
             <Route
-              path="/headquarter/store-recommendation"
-              element={<HeadquarterRecommendationPage />}
+              path="/headquarter/store-recommendation-stream"
+              element={<HeadquarterStreamRecommendationPage />}
             />
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/promotions" element={<PromotionPage />} />
