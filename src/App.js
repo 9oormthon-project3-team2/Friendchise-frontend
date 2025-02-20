@@ -18,8 +18,13 @@ import CreateStore from '@/pages/store/CreateStore';
 import RecommendationStore from './pages/RecommendationStore';
 import NotificationPage from './pages/NotificationPage';
 import PromotionPage from './pages/PromotionPage';
+
+import RegisterPageCustomer from './pages/RegisterPageCustomer';
+import LoginPageCustomer from './pages/LoginPageCustomer';
+import MyPageCustomer from './pages/MyPageCustomer';
 import UpdateStore from './pages/store/UpdateStore';
 import SSEManager from './components/SSEManager';
+
 
 const App = () => {
   return (
@@ -60,6 +65,9 @@ const App = () => {
             />
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/promotions" element={<PromotionPage />} />
+            <Route path="/register/customer" element={<RegisterPageCustomer />} />
+            <Route path="/login/customer" element={<LoginPageCustomer />} />
+            <Route path="/mypage/customer" element={<MyPageCustomer />} />
             {/* 필요에 따라 추가 라우팅 */}
           </Routes>
         </BrowserRouter>
