@@ -29,7 +29,7 @@ const StreamApiButton = ({ coords, categoryGroup }) => {
         y: coords.lat,
       };
 
-      const res = await fetch("http://localhost:8080/headquarter/store-recommendation-stream", {
+      const res = await fetch("http://13.209.82.1:8080/headquarter/store-recommendation-stream", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
