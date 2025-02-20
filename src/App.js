@@ -7,7 +7,6 @@ import LoginPage from './pages/LoginPage';
 import MyPage from './pages/MyPage';
 import ChangePassword from './pages/ChangePassword';
 import ChangeStoreId from './pages/ChangeStoreId';
-import MemberSearch from './pages/MemberSearch';
 import DeleteAccount from './pages/DeleteAccount';
 import RegisterPage from './pages/RegisterPage';
 import HeadquarterRecommendationPage from './pages/headquarter/HeadquarterRecommendationPage';
@@ -33,13 +32,12 @@ const App = () => {
         <BrowserRouter>
           <SSEManager />
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/manager/login" element={<LoginPage />} />
+            <Route path="/manager/mypage" element={<MyPage />} />
             <Route path="/change-password" element={<ChangePassword />} />
-            <Route path="/change-store-id" element={<ChangeStoreId />} />
-            <Route path="/member-search" element={<MemberSearch />} />
-            <Route path="/delete-account" element={<DeleteAccount />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/manager/change-store-id" element={<ChangeStoreId />} />
+            <Route path="/manager/delete-account" element={<DeleteAccount />} />
+            <Route path="/manager/register" element={<RegisterPage />} />
             <Route path="/nearest-store" element={<RecommendationStore />} />
             <Route path="/createStore" element={<CreateStore />} />
             <Route path="/updateStore" element={<UpdateStore />} />

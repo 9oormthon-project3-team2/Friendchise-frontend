@@ -8,7 +8,7 @@ import { NotificationsContext } from '../context/NotificationsContext';
 
 const SSEManager = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
+  const isLoginPage = location.pathname === '/manager/login';
 
   // context와 toast는 항상 호출 (조건 없이)
   const { addNotification } = useContext(NotificationsContext);

@@ -33,7 +33,7 @@ const LoginPage = () => {
         duration: 3000,
         isClosable: true
       });
-      navigate('/mypage');
+      navigate('/manager/mypage');
     } catch (error) {
       toast({
         title: '로그인 실패',
