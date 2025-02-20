@@ -34,7 +34,7 @@ const App = () => {
           <Routes>
             <Route path="/manager/login" element={<LoginPage />} />
             <Route path="/manager/mypage" element={<MyPage />} />
-            <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/manager/change-password" element={<ChangePassword />} />
             <Route path="/manager/change-store-id" element={<ChangeStoreId />} />
             <Route path="/manager/delete-account" element={<DeleteAccount />} />
             <Route path="/manager/register" element={<RegisterPage />} />
